@@ -10,6 +10,8 @@ services:
       - "3306"
     volumes:
       - mariadb_data:/var/lib/mysql/
+    ports:
+      - 3306:3306
     networks:
       - inception
     env_file:
@@ -21,4 +23,51 @@ services:
     image: wordpress
     build:
       context: ./requirements/wordpress
-      
+    volumes:
+      - wordpress_data:/var/www/wordpress
+    ports:
+      - 9000:9000
+    networks:
+      - inception
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    restart: always
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    build:
+      context: ./requirements/nginx
+    volumes:
+      - wordpress_data:/var/www/wordpress
+    ports:
+      - 443:443
+    networks:
+      - inception
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+    restart: always
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/cortiz/data/mariadb_data
+  
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/cortiz/data/wordpress_data      
