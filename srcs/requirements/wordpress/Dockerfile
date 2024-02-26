@@ -18,7 +18,7 @@ RUN	mkdir -p /run/php
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phat /usr/local/bin/wp
+RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY ./tools/wp_script.sh /bin/
 RUN chmod +x /bin/wp_script.sh
