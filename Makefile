@@ -1,19 +1,24 @@
 all: build
 
-conf:
+build: clean
 	mkdir -p ~/data/mariadb_data
 	mkdir -p ~/data/wordpress_data
+	sudo sed -i 's/127.0.0.1  localhost/127.0.0.1  cortiz.42.fr/' /etc/hosts
+	sudo docker-compose -f srcs/docker-compose.yml up --build
 
-build: clean
-	docker-compose -f srcs/docker-compose.yml up -d
-# lance le container
 up: down
-	docker-compose -f srcs/docker-compose.yml up
-# arete le container
+	mkdir -p ~/data/mariadb_data
+	mkdir -p ~/data/wordpress_data
+	sudo sed -i 's/127.0.0.1  localhost/127.0.0.1  cortiz.42.fr/' /etc/hosts
+	sudo docker-compose -f srcs/docker-compose.yml up -d
+
 down:
-	docker-compose -f srcs/docker-compose.yml down
+	sudo docker-compose -f srcs/docker-compose.yml down
 
 clean:
-	docker-compose -f srcs/docker-compose.yml down --rmi all --volumes
+	sudo docker-compose -f srcs/docker-compose.yml down --rmi all --volumes
+	sudo rm -rf ~/data
+	sudo rm -rf ~/data
+	sudo sed -i 's/127.0.0.1  cortiz.42.fr/127.0.0.1  localhost/' /etc/hosts
 
 .PHONY: all build up down clean

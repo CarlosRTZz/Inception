@@ -63,11 +63,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/cortiz/data/mariadb_data
+      device: /home/cortiz/data/mariadb_data
   
   wordpress_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/cortiz/data/wordpress_data      
+      device: /home/cortiz/data/wordpress_data      
