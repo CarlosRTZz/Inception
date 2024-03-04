@@ -70,4 +70,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/cortiz/data/wordpress_data      
+      device: /home/cortiz/data/wordpress_data
